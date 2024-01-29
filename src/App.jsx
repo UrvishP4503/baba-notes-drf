@@ -1,4 +1,6 @@
 import Profile from './components/Profile';
+import SideBar from './components/SideBar';
+import Notes from './components/Notes';
 import './App.css';
 
 function App() {
@@ -7,10 +9,11 @@ function App() {
       <div className="container">
         <div className="left">
           <Profile />
-          <button className="upper">hi</button>
-          <button className="lower">ho</button>
+          <SideBar />
         </div>
-        <div className="right">hoho</div>
+        <div className="right">
+          <Notes />
+        </div>
       </div>
     </>
   );
