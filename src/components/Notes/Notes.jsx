@@ -1,3 +1,5 @@
+import "./Notes.css";
+
 const Notes = () => {
   return (
     <div>
