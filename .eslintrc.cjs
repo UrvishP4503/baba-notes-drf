@@ -21,10 +21,7 @@ module.exports = {
       { blankLine: "always", prev: "*", next: "function" },
       { blankLine: "always", prev: "function", next: "*" },
       { blankLine: "always", prev: "function", next: "function" },
-      { blankLine: "always", prev: "*", next: "arrow" },
-      { blankLine: "always", prev: "arrow", next: "*" },
     ],
-    "space-before-function-paren": ["error", "always"],
     quotes: ["error", "double"],
   },
 };

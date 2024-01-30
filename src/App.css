@@ -16,4 +16,5 @@
 .right {
   width: 87%;
   background-color: #181825;
+  flex-direction: column;
 }

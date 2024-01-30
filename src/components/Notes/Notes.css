@@ -1,0 +1,19 @@
+.box {
+  background-color: #f2cdcd;
+  border-style: solid;
+  width: 215px;
+  height: 215px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  max-width: 215px; /* Set a maximum width for the box */
+  overflow: hidden; /* Hide content that overflows the box */
+  margin: 20px;
+}
+
+.title {
+  margin: 4px;
+  font-size: 20px;
+  font-weight: bold;
+}
