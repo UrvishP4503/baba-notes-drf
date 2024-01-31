@@ -7,13 +7,33 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  max-width: 215px; /* Set a maximum width for the box */
   overflow: hidden; /* Hide content that overflows the box */
   margin: 20px;
+  text-align: center;
+  /* flex-wrap: true; */
+  /* justify-content: space-between; */
 }
 
 .title {
+  text-align: center;
   margin: 4px;
+  width: 100%;
   font-size: 20px;
   font-weight: bold;
+
+  width: auto;
+  background-color: #f2cdcd;
+}
+
+.note-text {
+  width: 210px;
+  background-color: #f2cdcd;
+}
+
+.created-at {
+  width: auto;
+  background-color: #f2cdcd;
+  margin-top: auto;
+  margin-left: auto;
+  text-align: center;
 }

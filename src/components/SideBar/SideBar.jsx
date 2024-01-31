@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
 import Dropdown from "../Dropdown/Dropdown";
 import "./SideBar.css";
 
 const SideBar = () => {
   return (
     <div className="sidebar">
-      <button className="sidebar-new-note">hi</button>
+      <Link className="sidebar-new-note" to={"/new"}>
+        hi
+      </Link>
       <Dropdown />
     </div>
   );

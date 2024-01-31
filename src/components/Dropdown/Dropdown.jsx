@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "./Dropdown.css";
 
 const Dropdown = () => {
@@ -20,18 +20,12 @@ const Dropdown = () => {
           // TODO: remove the part below and replace it with the actual categories from the backend.
           <div>
             <InputButtonComponent />
-            <Link className="catagories" to="/item">
-              Item 1
-            </Link>
-            <Link className="catagories" to="/item">
-              Item 2
-            </Link>
-            <Link className="catagories" to="/item">
-              Item 3
-            </Link>
-            <li className="catagories" to="/item">
-              Item 4
-            </li>
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+            </ul>
           </div>
         )}
       </div>
