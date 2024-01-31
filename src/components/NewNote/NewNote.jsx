@@ -4,10 +4,14 @@ const NewNote = () => {
   return (
     <div className="new-note">
       <br />
-      <textarea name="title" cols="16" rows="1"></textarea>
+      <input type="text" className="title"></input>
       <br />
       <br />
-      <textarea name="note-text" cols="30" rows="10"></textarea>
+      <textarea
+        name="note-text"
+        onInput="this.parentNode.dataset.replicatedValue = this.value"
+        placeholder="You can always edit a bad page. You can't edit a blank page."
+      ></textarea>
     </div>
   );
 };
