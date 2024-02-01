@@ -4,27 +4,57 @@
   align-items: center;
 }
 
-.title {
-  background-color: antiquewhite;
-  border: hidden;
-  align-items: center;
-  width: 70%;
-  height: 22px;
-  margin-left: 15%;
-  margin-right: 15%;
-  outline: none;
+.head {
+  display: flex;
+  /* align-items: center; */
+  /* width: 70%; */
+  margin-left: 14.75%;
+  margin-right: 14.75%;
+  flex-wrap: wrap;
+  /* flex-direction: row; */
+  justify-content: space-between;
 }
 
-textarea[name="note-text"] {
-  background-color: antiquewhite;
+.title {
+  background-color: #f5e0dc;
+  color: #11111b;
   border: hidden;
-  align-items: center;
+  /* width: 70%; */
+  /* height: 22px; */
+  /* margin-left: 15%; */
+  /* margin-right: 15%; */
+  outline: none;
+}
+/* .category {
+  background-color: #f5e0dc;
+  color: #11111b;
+}
+
+.save-button {
+  background-color: #cba6f7;
+  color: #ffffff;
+  border: 2px solid #8d65b5;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 20px;
+}
+
+.save-button:hover {
+  background-color: #8d65b5;
+} */
+
+textarea[name="note-text"] {
+  background-color: #f5e0dc;
+  color: #11111b;
+  border: hidden;
   width: 70%;
   margin-left: 15%;
   margin-right: 15%;
   height: 80vh;
   min-height: 400px;
-  /* overflow-y: hidden; */
+  overflow: auto;
   resize: none;
   outline: none;
 }

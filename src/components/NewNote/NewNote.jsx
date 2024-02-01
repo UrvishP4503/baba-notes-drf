@@ -3,13 +3,14 @@ import "./NewNote.css";
 const NewNote = () => {
   return (
     <div className="new-note">
-      <br />
-      <input type="text" className="title"></input>
-      <br />
-      <br />
+      <div className="head">
+        <input type="text" className="title" placeholder="Enter Title"></input>
+        <div className="category">hi</div>
+        <button className="save-button"> Save </button>
+      </div>
+
       <textarea
         name="note-text"
-        onInput="this.parentNode.dataset.replicatedValue = this.value"
         placeholder="You can always edit a bad page. You can't edit a blank page."
       ></textarea>
     </div>
