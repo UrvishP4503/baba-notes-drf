@@ -1,6 +1,8 @@
 .box {
-  background-color: #f2cdcd;
+  /* background-color:	#cba6f7		; */
+
   border-style: solid;
+  border-radius: 15px;
   width: 215px;
   height: 215px;
   align-items: center;
@@ -14,7 +16,7 @@
   /* justify-content: space-between; */
 }
 
-.title {
+.title-text {
   text-align: center;
   margin: 4px;
   width: 100%;
@@ -22,17 +24,20 @@
   font-weight: bold;
 
   width: auto;
-  background-color: #f2cdcd;
+  /* background-color: #f2cdcd; */
+  color: #cdd6f4		;
 }
 
 .note-text {
   width: 210px;
-  background-color: #f2cdcd;
+  /* background-color: #f2cdcd; */
+  color: #94e2d5		;
 }
 
 .created-at {
   width: auto;
-  background-color: #f2cdcd;
+  /* background-color: #f2cdcd; */
+  color: #cdd6f4	;
   margin-top: auto;
   margin-left: auto;
   margin-right: 5px;
