@@ -15,31 +15,27 @@
   background-color: #313244;
 }
 
-.dropdown-add-main{
-  /* background-color: aqua; */
+.dropdown-add-main {
   height: 350px;
   margin-top: 10px;
-  /* height: auto; */
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: center;
-  /* justify-content: space-evenly; */
 }
 
-.dropdown-add-semi-main-1{
+.dropdown-add-new-category {
   margin-top: 5px;
   width: 95%;
   height: 25%;
-  /* background-color: pink; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:8px;
+  gap: 8px;
 }
 
-.dropdown-add-input{
+.dropdown-add-input {
   width: 95%;
   height: 35px;
   border: none;
@@ -50,30 +46,27 @@
   outline: none;
 }
 
-.dropdown-add-button{
+.dropdown-add-button {
   width: 50%;
   height: 29px;
-  color: #cdd6f4;
+  color: #11111b;
   border-radius: 7px;
-  background-color: #fe640b	;
+  background-color: #cba6f7;
 }
 
-::placeholder{
+::placeholder {
   color: #cdd6f4;
 }
 
-.dropdown-add-semi-main-2{
+.dropdown-add-semi-main-2 {
   width: 95%;
   height: 65%;
-  /* background-color: rgb(177, 69, 87); */
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  gap:5px;
-
+  gap: 5px;
 }
 
-.dropdown-category-container{
+.dropdown-category-container {
   width: 100%;
   height: 35px;
   display: flex;
@@ -81,41 +74,33 @@
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
-  /* background-color: bisque; */
 }
 
-.dropdown-category-container:hover{
-  /* background-color: #eba0ac; */
+.dropdown-category-container:hover {
   background-color: #313244;
-  .dropdown-category-hashtag{
+  .dropdown-category-hashtag {
     background-color: #11111b;
   }
 }
 
-.dropdown-category-hashtag{
-  width: 28px;
+.dropdown-category-hashtag {
+  width: 31px;
   height: 28px;
   text-align: center;
   font-size: larger;
   padding-top: 4px;
   background-color: #313244;
   border-radius: 50%;
-  margin-left: 2px;
-  /* align-items: center */
+  margin-left: 3px;
 }
 
-
-.dropdown-category-name{
+.dropdown-category-name {
   width: 152px;
   background: none;
   height: 28px;
-  /* background-color: #fe640b; */
   display: flex;
-  /* font-size: small; */
-  font-size:medium;
+  font-size: medium;
   overflow: hidden;
   align-items: center;
-
   text-overflow: clip;
-  /* overflow: hidden; */
 }

@@ -26,11 +26,15 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/new",
+    path: "/note/:id",
+    element: <div>Note</div>,
+  },
+  {
+    path: "/note/new",
     element: <NewNote />,
   },
+  // TODO: User profile route, login/register route, and 404 route. Wait for the backend to be ready.
 ]);
-
 const App = () => {
   return <RouterProvider router={router} />;
 };

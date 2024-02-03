@@ -1,10 +1,9 @@
 .box {
-  /* background-color:	#cba6f7		; */
-
   border-style: solid;
   border-radius: 15px;
+  border-color: #cba6f7;
   width: 215px;
-  height: 215px;
+  height: 255px;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -12,36 +11,40 @@
   overflow: hidden; /* Hide content that overflows the box */
   margin: 20px;
   text-align: center;
-  /* flex-wrap: true; */
-  /* justify-content: space-between; */
+  text-decoration: none;
+}
+
+.hullo {
+  background-color: #181825;
+  text-decoration: none;
 }
 
 .title-text {
   text-align: center;
-  margin: 4px;
+  margin: 9px;
   width: 100%;
   font-size: 20px;
   font-weight: bold;
-
   width: auto;
-  /* background-color: #f2cdcd; */
-  color: #cdd6f4		;
+  color: #cdd6f4;
 }
 
 .note-text {
   width: 210px;
-  /* background-color: #f2cdcd; */
-  color: #94e2d5		;
+  color: #94e2d5;
+  margin-top: 4px;
+}
+
+.note-category {
+  margin: 4px;
+  color: #cba6f7;
 }
 
 .created-at {
   width: auto;
-  /* background-color: #f2cdcd; */
-  color: #cdd6f4	;
-  margin-top: auto;
-  margin-left: auto;
+  color: #cdd6f4;
+  margin: auto;
   margin-right: 5px;
-
   margin-bottom: 2px;
   text-align: center;
 }
