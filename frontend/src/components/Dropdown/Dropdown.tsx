@@ -1,30 +1,32 @@
 import { useState } from "react";
-// import { Link } from "react-router-dom";
 import "./Dropdown.css";
 
 const Dropdown = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [addNewCategory, setAddNewCategory] = useState(false);
+  const [state, setState] = useState({ isOpen: false, addNewCategory: false });
 
   const handleClickOpen = () => {
-    setIsOpen(!isOpen);
+    setState(prevState => ({ ...prevState, isOpen: !prevState.isOpen }));
   };
 
-  const handleClickNewCategory = () => {
-    setAddNewCategory(!addNewCategory);
+  const handleNewCategory = () => {
+    setState(prevState => ({
+      ...prevState,
+      addNewCategory: !prevState.addNewCategory,
+    }));
   };
+
   return (
     <div className="dropdown">
       <button className="dropdown-button" onClick={handleClickOpen}>
         Categories
       </button>
 
-      {isOpen && (
+      {state.isOpen && (
         <div className="dropdown-add-main">
-          <button className="dropdown-button" onClick={handleClickNewCategory}>
-            {addNewCategory ? "Close" : "Add New Category"}
+          <button className="dropdown-button" onClick={handleNewCategory}>
+            {state.addNewCategory ? "Close" : "Add New Category"}
           </button>
-          {addNewCategory && (
+          {state.addNewCategory && (
             <div className="dropdown-add-new-category">
               <input
                 type="text"
@@ -34,12 +36,7 @@ const Dropdown = () => {
               <button className="dropdown-add-button">ADD</button>
             </div>
           )}
-
-          {/* <div className="dropdown-category-container">
-                <div className="dropdown-category-hashtag"> #</div>
-                <div className="dropdown-category-name">WWWWWWWWWWWWWWW</div>
-              </div> */}
-          {!addNewCategory && (
+          {!state.addNewCategory && (
             <div className="dropdown-add-semi-main-2">
               <div className="dropdown-category-container">
                 <div className="dropdown-category-hashtag">#</div>
