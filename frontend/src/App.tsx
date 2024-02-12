@@ -1,10 +1,10 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Profile from './components/Profile/Profile';
-import SideBar from './components/SideBar/SideBar';
-import Notes from './components/Notes/Notes';
-import NewNote from './components/NewNote/NewNote';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Profile from "./components/Profile/Profile";
+import SideBar from "./components/SideBar/SideBar";
+import Notes from "./components/Notes/Notes";
+import NewNote from "./components/NewNote/NewNote";
 
-import './App.css';
+import "./App.css";
 
 const Home = () => {
   return (
@@ -22,20 +22,21 @@ const Home = () => {
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Home />,
   },
 
   {
-    path: '/new/note',
+    path: "/new/note",
     element: <NewNote />,
   },
   {
-    path: '/note/:id',
-    element: <div>Note</div>,
+    path: "/note/:id",
+    element: <div>404 not found</div>,
   },
   // TODO: User profile route, login/register route, and 404 route. Wait for the backend to be ready.
 ]);
+
 const App = () => {
   return <RouterProvider router={router} />;
 };
