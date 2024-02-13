@@ -1,80 +1,21 @@
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 
-from .models import Notes
-from .serializers import NotesSerializer, NotesListSerializer, UserSerializer
+from .models import Notes, User
+from .serializers import NotesSerializer, UserSerializer
 
 
-class NotesViewSet(ViewSet):
-    """
-    ViewSet for managing notes.
-    """
+class NotesModelViewSet(ModelViewSet):
+    queryset = Notes.objects.all()
+    serializer_class = NotesSerializer
+    lookup_field = "id"
 
-    def list(self, request, *args, **kwargs):
-        """
-        Retrieve a list of all notes.
+    def get_queryset(self):
+        return Notes.objects.all()[:25]
 
-        Returns:
-            Response: HTTP response with a list of notes.
-        """
-        notes = Notes.objects.all().order_by("-updatedAt")
-        notes_data = NotesListSerializer(notes, many=True).data
 
-        return Response(status=status.HTTP_200_OK, data={"notes": notes_data})
+class UserModelViewSet(ModelViewSet):
+    serializer_class = UserSerializer
+    lookup_field = "email"
 
-    def create(self, request, *args, **kwargs):
-        """
-        Create a new note.
-
-        Args:
-            request (Request): HTTP request object containing the note data.
-
-        Returns:
-            Response: HTTP response with the created note.
-        """
-        note = NotesSerializer(data=request.data)
-
-        note.is_valid(raise_exception=True)
-        note.save()
-
-        return Response(
-            status=status.HTTP_201_CREATED,
-            data={"message": "Note created successfully", "note": note.data},
-        )
-
-    def retrieve(self, request, *args, **kwargs):
-        """
-        Retrieve a specific note.
-
-        Args:
-            request (Request): HTTP request object.
-
-        Returns:
-            Response: HTTP response with the retrieved note.
-        """
-        pass
-
-    def update(self, request, *args, **kwargs):
-        """
-        Update a specific note.
-
-        Args:
-            request (Request): HTTP request object.
-
-        Returns:
-            Response: HTTP response indicating the success of the update.
-        """
-        pass
-
-    def partial_update(self, request, *args, **kwargs):
-        """
-        Partially update a specific note.
-
-        Args:
-            request (Request): HTTP request object.
-
-        Returns:
-            Response: HTTP response indicating the success of the partial update.
-        """
-        pass
+    def get_queryset(self):
+        return User.objects.filter(email=self.request.user.email)

@@ -18,9 +18,12 @@ class Notes(models.Model):
     category = models.CharField(max_length=20, blank=False, null=False)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+    userIdentificationNumber = models.ForeignKey("User", on_delete=models.CASCADE)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
 
     class Meta:
         db_table = "notes"
+        ordering = ["-updatedAt"]
 
 
 class User(AbstractBaseUser):
@@ -41,5 +44,9 @@ class User(AbstractBaseUser):
         db_table = "users"
 
 
-# TODO: figure out how to manage categories
-# TODO: how the hell do I manage categories??
+class Category(models.Model):
+    name = models.CharField(max_length=20, blank=False, null=False)
+    userIdentificationNumber = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "categories"
