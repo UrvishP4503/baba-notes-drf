@@ -1,7 +1,10 @@
-from django.urls import path
-from .views import get_notes, create_note
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path("notes", get_notes, name="get_notes"),
-    path("create-note", create_note, name="create_note"),
-]
+from .views import NotesViewSet
+
+routers = DefaultRouter()
+
+routers.register(r"notes", NotesViewSet, basename="notes")
+
+
+urlpatterns = routers.urls

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Notes
+from .models import Notes, User
 
 
 class NotesSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class NotesSerializer(serializers.ModelSerializer):
         ]
 
 
-class NotesListSerializer(NotesSerializer):
+class NotesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notes
         fields = "__all__"
@@ -22,3 +22,17 @@ class NotesListSerializer(NotesSerializer):
             "created_at",
             "updated_at",
         ]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "email",
+            "username",
+            "password",
+        ]
+
+        extra_kwargs = {
+            "email": {"required": True},
+        }
