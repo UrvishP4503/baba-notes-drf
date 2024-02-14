@@ -1,27 +1,21 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from .models import Notes
-from .serializers import NotesSerializer, NotesListSerializer
-
-
-@api_view(["GET"])
-def get_notes(request, *args, **kwargs):
-    notes = Notes.objects.all()
-    notes_data = NotesListSerializer(notes, many=True).data
-
-    return Response(status=200, data={"notes": notes_data})
+from .models import Notes, User
+from .serializers import NotesSerializer, UserSerializer
 
 
-@api_view(["POST"])
-def create_note(request, *args, **kwargs):
-    instance = NotesSerializer(data=request.data)
+class NotesModelViewSet(ModelViewSet):
+    queryset = Notes.objects.all()
+    serializer_class = NotesSerializer
+    lookup_field = "id"
 
-    if instance.is_valid():
-        instance.save()
-        return Response(
-            status=200,
-            data={"message": "Note created successfully", "note": instance.data},
-        )
+    def get_queryset(self):
+        return Notes.objects.all()[:25]
 
-    return Response(status=400, data={"message": "Note creation failed"})
+
+class UserModelViewSet(ModelViewSet):
+    serializer_class = UserSerializer
+    lookup_field = "email"
+
+    def get_queryset(self):
+        return User.objects.filter(email=self.request.user.email)

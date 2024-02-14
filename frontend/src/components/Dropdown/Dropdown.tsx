@@ -3,6 +3,7 @@ import "./Dropdown.css";
 
 const Dropdown = () => {
   const [state, setState] = useState({ isOpen: false, addNewCategory: false });
+  const [newCategory, setNewCategory] = useState("");
 
   const handleClickOpen = () => {
     setState(prevState => ({ ...prevState, isOpen: !prevState.isOpen }));
@@ -37,7 +38,7 @@ const Dropdown = () => {
             </div>
           )}
           {!state.addNewCategory && (
-            <div className="dropdown-add-semi-main-2">
+            <div className="dropdown-category-list">
               <div className="dropdown-category-container">
                 <div className="dropdown-category-hashtag">#</div>
                 <div className="dropdown-category-name">WWWWWWWWWWWWWWW</div>

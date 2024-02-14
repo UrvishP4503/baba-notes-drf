@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Notes
+from .models import Notes, User
 
 
 class NotesAdmin(admin.ModelAdmin):
@@ -11,4 +11,14 @@ class NotesAdmin(admin.ModelAdmin):
     ]
 
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = [
+        "email",
+        "username",
+        "password",
+        "userIdentificationNumber",
+    ]
+
+
 admin.site.register(Notes, NotesAdmin)
+admin.site.register(User)
