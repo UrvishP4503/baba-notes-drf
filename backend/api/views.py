@@ -4,7 +4,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
@@ -13,7 +14,7 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 
-
+from .authentication import Baba
 from .models import Notes, User, Category
 from .serializers import (
     NotesSerializer,
@@ -26,6 +27,11 @@ from .serializers import (
 class NotesModelViewSet(ModelViewSet):
     permission_classes = [
         IsAuthenticated,
+    ]
+
+    authentication_classes = [
+        Baba,
+        TokenAuthentication,
     ]
     queryset = Notes.objects.all()
     serializer_class = NotesSerializer
@@ -44,12 +50,52 @@ class NotesModelViewSet(ModelViewSet):
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(userIdentificationNumber=user, category=category)
+        serializer.save(
+            userIdentificationNumber=user.userIdentificationNumber,
+            category=category,
+        )
 
         return Response(status=status.HTTP_201_CREATED, data=serializer)
 
 
-# TODO: add the category viewset
+class CategoryModelViewSet(APIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    authentication_classes = [
+        Baba,
+        TokenAuthentication,
+    ]
+    serializer_class = CategorySerializer
+
+    def post(self, request):
+        user = request.user
+        data = {
+            "userIdentificationNumber": user.userIdentificationNumber,
+            "name": request.data.get("name"),
+        }
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+    def delete(self, request, pk=None):
+        if not pk:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"error": "No id provided"},
+            )
+        category = get_object_or_404(Category, pk=pk)
+
+        print(request.user.userIdentificationNumber)
+        print(category.userIdentificationNumber)
+
+        if request.user == category.userIdentificationNumber:
+            category.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class UserViewSet(CreateAPIView):
@@ -60,9 +106,14 @@ class RetrieveUpdateUserView(RetrieveUpdateAPIView):
     permission_classes = [
         IsAuthenticated,
     ]
+    authentication_classes = [
+        Baba,
+        TokenAuthentication,
+    ]
     serializer_class = UserSerializer
 
     def get_object(self):
+        print(self.request.user.userIdentificationNumber)
         return self.request.user
 
 
@@ -91,6 +142,10 @@ class LogoutView(APIView):
     permission_classes = [
         IsAuthenticated,
     ]
+    authentication_classes = [
+        Baba,
+        TokenAuthentication,
+    ]
 
     def post(self, request):
         response = Response(status=status.HTTP_200_OK)
@@ -102,6 +157,10 @@ class LogoutView(APIView):
 class DeleteUserView(DestroyAPIView):
     permission_classes = [
         IsAuthenticated,
+    ]
+    authentication_classes = [
+        Baba,
+        TokenAuthentication,
     ]
     serializer_class = UserSerializer
 

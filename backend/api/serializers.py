@@ -17,7 +17,6 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = [
             "userIdentificationNumber",
             "name",
-            "id",
         ]
 
 
