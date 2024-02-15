@@ -10,23 +10,32 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from os import getenv, path
 from pathlib import Path
+from django.core.management.utils import get_random_secret_key
+import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_file = BASE_DIR / ".env.local"
+
+if path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ti4g+4p#t_v%-zs%^)(ej(z^9@^li=moo+8swe#5m1oag7z5p="
+SECRET_KEY = getenv("SECRET_KEY", default=get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "127.0.0.1,localhost",
+).split(",")
 
 # Application definition
 
@@ -37,13 +46,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "api",
     "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -127,3 +139,25 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "api.authentication.Baba",
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
+
+AUTH_COOKIE = "token"
+AUTH_COOKIE_AGE = 60 * 60 * 24
+AUTH_COOKIE_SECURE = getenv("AUTH_COOKIE_SECURE", "False") == "True"
+AUTH_COOKIE_HTTP_ONLY = True
+AUTH_COOKIE_PATH = "/"
+AUTH_COOKIE_SAMESITE = "None"
+
+
+CORS_ALLOWED_ORIGINS = getenv(
+    "CORS_ALLOWED_ORIGINS",
+    "http://127.0.0.1:3000,http://localhost:3000",
+).split(",")
+
+AUTH_USER_MODEL = "api.User"
