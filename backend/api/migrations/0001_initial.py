@@ -10,49 +10,84 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('userIdentificationNumber', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, unique=True)),
-                ('username', models.CharField(max_length=255, unique=True)),
-                ('email', models.EmailField(default='your_default@example.com', max_length=255, unique=True)),
-                ('last_login', models.DateTimeField(auto_now=True)),
-                ('is_admin', models.BooleanField(default=True)),
-                ('is_active', models.BooleanField(default=True)),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "userIdentificationNumber",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                ("username", models.CharField(max_length=255, unique=True)),
+                ("email", models.EmailField(max_length=255, unique=True)),
+                ("last_login", models.DateTimeField(auto_now=True)),
+                ("is_admin", models.BooleanField(default=True)),
+                ("is_active", models.BooleanField(default=True)),
             ],
             options={
-                'db_table': 'users',
+                "db_table": "users",
             },
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=20)),
-                ('userIdentificationNumber', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=20)),
+                (
+                    "userIdentificationNumber",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'db_table': 'categories',
+                "db_table": "categories",
             },
         ),
         migrations.CreateModel(
-            name='Notes',
+            name="Notes",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100)),
-                ('content', models.TextField(blank=True, null=True)),
-                ('createdAt', models.DateTimeField(auto_now_add=True)),
-                ('updatedAt', models.DateTimeField(auto_now=True)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.category')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=100)),
+                ("content", models.TextField(blank=True, null=True)),
+                ("createdAt", models.DateTimeField(auto_now_add=True)),
+                ("updatedAt", models.DateTimeField(auto_now=True)),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="api.category"
+                    ),
+                ),
             ],
             options={
-                'db_table': 'notes',
-                'ordering': ['-updatedAt'],
+                "db_table": "notes",
+                "ordering": ["-updatedAt"],
             },
         ),
     ]
