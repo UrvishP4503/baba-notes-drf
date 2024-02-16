@@ -73,7 +73,7 @@ class Notes(models.Model):
     category = models.CharField(max_length=20, blank=False, null=False)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
-    userIdentificationNumber = models.ForeignKey("User", on_delete=models.CASCADE)
+    userIdentificationNumber = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     class Meta:

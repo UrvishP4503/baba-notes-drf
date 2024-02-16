@@ -1,14 +1,15 @@
+from django.http import Http404
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import (
-    RetrieveUpdateDestroyAPIView,
     CreateAPIView,
     RetrieveUpdateAPIView,
     DestroyAPIView,
@@ -24,6 +25,12 @@ from .serializers import (
 )
 
 
+class CustomPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = "page_size"
+    max_page_size = 1000
+
+
 class NotesModelViewSet(ModelViewSet):
     permission_classes = [
         IsAuthenticated,
@@ -35,10 +42,8 @@ class NotesModelViewSet(ModelViewSet):
     ]
     queryset = Notes.objects.all()
     serializer_class = NotesSerializer
+    pagination_class = CustomPagination
     lookup_field = "id"
-
-    def get_queryset(self):
-        return Notes.objects.all().order_by("-updatedAt")[:25]
 
     def create(self, request, *args, **kwargs):
         user = request.user
@@ -48,14 +53,33 @@ class NotesModelViewSet(ModelViewSet):
             userIdentificationNumber=user.userIdentificationNumber,
         )
 
-        serializer = self.get_serializer(data=request.data)
+        data = {
+            "title": request.data.get("title"),
+            "content": request.data.get("content"),
+            "category": category.id,
+            "userIdentificationNumber": user.userIdentificationNumber,
+        }
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(
-            userIdentificationNumber=user.userIdentificationNumber,
-            category=category,
-        )
+        serializer.save()
 
-        return Response(status=status.HTTP_201_CREATED, data=serializer)
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.title = request.data.get("title", instance.title)
+        instance.content = request.data.get("content", instance.content)
+        if request.data.get("category"):
+            category = get_object_or_404(
+                Category,
+                name=request.data.get("category"),
+                userIdentificationNumber=request.user.userIdentificationNumber,
+            )
+            instance.category = category
+        instance.save()
+
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
 
 class CategoryModelViewSet(APIView):
@@ -117,6 +141,32 @@ class RetrieveUpdateUserView(RetrieveUpdateAPIView):
         return self.request.user
 
 
+class DeleteUserView(DestroyAPIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    authentication_classes = [
+        Baba,
+        TokenAuthentication,
+    ]
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        email = self.request.data.get("email")
+        return User.objects.filter(email=email)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def delete(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        instance = get_object_or_404(queryset)
+
+        self.perform_destroy(instance)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class CustomAuthToken(ObtainAuthToken):
     serializer_class = AuthTokenSerializer
 
@@ -152,29 +202,3 @@ class LogoutView(APIView):
         response.delete_cookie(settings.AUTH_COOKIE)
 
         return response
-
-
-class DeleteUserView(DestroyAPIView):
-    permission_classes = [
-        IsAuthenticated,
-    ]
-    authentication_classes = [
-        Baba,
-        TokenAuthentication,
-    ]
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        email = self.request.data.get("email")
-        return User.objects.filter(email=email)
-
-    def perform_destroy(self, instance):
-        instance.delete()
-
-    def delete(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        instance = get_object_or_404(queryset)
-
-        self.perform_destroy(instance)
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
