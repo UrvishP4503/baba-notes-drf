@@ -3,7 +3,6 @@ import "./Dropdown.css";
 
 const Dropdown = () => {
   const [state, setState] = useState({ isOpen: false, addNewCategory: false });
-  const [newCategory, setNewCategory] = useState("");
 
   const handleClickOpen = () => {
     setState(prevState => ({ ...prevState, isOpen: !prevState.isOpen }));
